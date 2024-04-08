@@ -20,7 +20,7 @@ export async function addTestingNetworkAries() {
       {
         chainId: "0x5b73",
         rpcUrls: ["https://rpc1.aries.axiomesh.io"],
-        chainName: "Axiomledger Aries",
+        chainName: "Axiomledger Aries Testnet",
         nativeCurrency: {
           name: "AxiomLedger",
           symbol: "AXM",
@@ -56,7 +56,7 @@ export async function addTestingNetworkTaurus() {
       {
         chainId: "0x5b74",
         rpcUrls: ["https://rpc1.taurus.axiomesh.io"],
-        chainName: "Axiomledger Taurus",
+        chainName: "Axiomledger Taurus Testnet",
         nativeCurrency: {
           name: "AxiomLedger",
           symbol: "AXM",
@@ -73,6 +73,63 @@ export async function addTestingNetworkTaurus() {
     alert(error.message);
   }
 }
+
+
+export async function addTestingNetworkGemini() {
+  const confirmed = window.confirm(
+    "Are you sure you want to add Gemini Testnet to MetaMask?"
+  );
+  if (!confirmed) {
+    return;
+  }
+  const ethereum = window.ethereum;
+  if (!ethereum) {
+    alert("Please install MetaMask first.");
+    return;
+  }
+  const networkConfig = {
+    method: "wallet_addEthereumChain",
+    params: [
+      {
+        chainId: "0x5b75",
+        rpcUrls: ["https://rpc5.gemini.axiomesh.io"],
+        chainName: "Axiomledger Gemini Testnet",
+        nativeCurrency: {
+          name: "AxiomLedger",
+          symbol: "AXM",
+          decimals: 18,
+        },
+        blockExplorerUrls: ["https://scan.gemini.axiomesh.io"],
+      },
+    ],
+  };
+  try {
+    await window.ethereum.request(networkConfig);
+    alert("Gemini has been added to MetaMask.");
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+## Gemini Testnet
+
+If you are connecting to Taurus for the first time, add the following information to the network list:
+
+- **RPC** : https://rpc5.gemini.axiomesh.io
+- **Chain ID** :`23413`
+- **Token Symbol** : `AXM`
+
+Or you can **click the button** to quickly add the network to your Metamask:
+
+<button style={{color:'#fff',fontWeight:600,borderRadius: 6, hight:70, width:170,background: 'linear-gradient(91deg,#EBCF3E -26.54%,#FC9468 140.68%)'}} onClick={addTestingNetworkGemini}>AddToMetaMask</button>
+
+**Here are the tools that might be useful:**
+
+| **Tools**          | **URL**                           |
+| ------------------ | --------------------------------- |
+| **Gemini AXMScan** | https://scan.gemini.axiomesh.io   |
+| **Gemini Faucet**  | https://faucet.gemini.axiomesh.io |
+
 
 ## Taurus Testnet
 
@@ -93,7 +150,7 @@ Or you can **click the button** to quickly add the network to your Metamask:
 | **Taurus AXMScan** | https://scan.taurus.axiomesh.io   |
 | **Taurus Faucet**  | https://faucet.taurus.axiomesh.io |
 
-## Aries Testnet(deprecated soon)
+## Aries Testnet (deprecated soon)
 
 If you are connecting to Aries for the first time, add the following information to the network list:
 
