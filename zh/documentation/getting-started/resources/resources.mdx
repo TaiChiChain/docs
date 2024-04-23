@@ -20,7 +20,7 @@ export async function addTestingNetworkAries() {
       {
         chainId: "0x5b73",
         rpcUrls: ["https://rpc1.aries.axiomesh.io"],
-        chainName: "Axiomledger Aries",
+        chainName: "Axiomledger Aries Testnet",
         nativeCurrency: {
           name: "AxiomLedger",
           symbol: "AXM",
@@ -56,7 +56,7 @@ export async function addTestingNetworkTaurus() {
       {
         chainId: "0x5b74",
         rpcUrls: ["https://rpc1.taurus.axiomesh.io"],
-        chainName: "Axiomledger Taurus",
+        chainName: "Axiomledger Taurus Testnet",
         nativeCurrency: {
           name: "AxiomLedger",
           symbol: "AXM",
@@ -73,6 +73,62 @@ export async function addTestingNetworkTaurus() {
     alert(error.message);
   }
 }
+
+export async function addTestingNetworkGemini() {
+  const confirmed = window.confirm(
+    "Are you sure you want to add Gemini Testnet to MetaMask?"
+  );
+  if (!confirmed) {
+    return;
+  }
+  const ethereum = window.ethereum;
+  if (!ethereum) {
+    alert("Please install MetaMask first.");
+    return;
+  }
+  const networkConfig = {
+    method: "wallet_addEthereumChain",
+    params: [
+      {
+        chainId: "0x5b75",
+        rpcUrls: ["https://rpc5.gemini.axiomesh.io"],
+        chainName: "Axiomledger Gemini Testnet",
+        nativeCurrency: {
+          name: "AxiomLedger",
+          symbol: "AXM",
+          decimals: 18,
+        },
+        blockExplorerUrls: ["https://scan.gemini.axiomesh.io"],
+      },
+    ],
+  };
+  try {
+    await window.ethereum.request(networkConfig);
+    alert("Gemini has been added to MetaMask.");
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+## Gemini Testnet
+
+如果您是首次添加 Gemini 测试网，请在钱包中填写以下信息添加网络：:
+
+- **RPC** : https://rpc5.gemini.axiomesh.io
+- **Chain ID** :`23413`
+- **Token Symbol** : `AXM`
+
+或者您可以**点击下方的按钮**一键添加网络至 Metamask:
+
+<button style={{color:'#fff',fontWeight:600,borderRadius: 6, hight:70, width:170,background: 'linear-gradient(91deg,#EBCF3E -26.54%,#FC9468 140.68%)'}} onClick={addTestingNetworkGemini}>添加到MetaMask</button>
+
+**以下工具可能对您有用：**
+
+| **Tools**          | **URL**                           |
+| ------------------ | --------------------------------- |
+| **Gemini AXMScan** | https://scan.gemini.axiomesh.io   |
+| **Gemini Faucet**  | https://faucet.gemini.axiomesh.io |
+
 
 ## Taurus Testnet
 
