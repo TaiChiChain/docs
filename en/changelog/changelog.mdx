@@ -2,6 +2,14 @@
 title: "Changelog"
 ---
 
+# v0.4.0
+- Implements POS consensus with native support for delegation staking capabilities.
+- Separates signing keys for P2P and consensus messages: P2P keys utilize the ed25519 curve for enhanced performance, while consensus keys use the bls12381 curve to support aggregate signatures.
+- Supports configuration of node metadata and Operator address (Operator address has node operation permissions), which can be updated by the Operator.
+- Optimizes data node synchronization mechanism by selectively synchronizing critical consensus messages to reduce overall network load.
+- Improves checkpoint mechanism to tolerate slower block execution performance on certain nodes.
+- Introduces native smart account system contract.
+
 # v0.3.0
 Contains the following features:
 - Transaction pool supports price-priority block packing

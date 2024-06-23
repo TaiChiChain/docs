@@ -1,0 +1,50 @@
+---
+title: "Validator"
+---
+
+In the POS of AxiomLedger, only validators have the right to produce blocks and earn staking and gas fee rewards. Nodes registered and added to the network act as data nodes. Data nodes do not have staking pools and cannot become consensus block-producing nodes. To become a validator node, the operator must send a transaction to join the candidate node, creating a staking pool. Once the staking pool's token amount meets the requirement, the node will automatically become a validator node in the next epoch.
+
+# Node State Model
+
+The node state model is shown in the diagram below. For more details, see: [About Nodes](/en/documentation/nodes/about)
+![node state model](en/images/staking/node-state-model.png)
+
+# Creating a Staking Pool
+
+To create a staking pool, the node operator must use their private key to send a transaction to call the Staking system contract and create a staking pool (this will simultaneously mint an LST that binds to the staking pool to collect delegation rewards). Once created, the node will transform into a candidate node.
+The operator uses the following command to create the pool:
+```shell
+./axiom-ledger node join-candidate-set \
+--node-id YOUR_NODE_ID \
+--commission-rate 1000 \
+--sender b6477143e17f889263044f6cf463dc37177ac4526c4c39a7a344198457024a2f
+```
+You need to specify the node ID, which is automatically assigned after node registration, and the commission rate. The commission rate base is 10000, where 0 corresponds to 0% commission and 10000 corresponds to 100% commission. The sender must be the operator's private key.
+After the transaction is executed and confirmed, the staking pool will be created, and an LST will be minted for collecting staking rewards. Subsequently, the node can accept delegated staking.
+
+# Becoming a Validator
+
+When the tokens in the node's staking pool meet the requirements, the node will be automatically selected as a validator node in the next epoch. The probability of producing blocks corresponds to the number of tokens in the staking pool. The more tokens, the higher the probability of producing blocks.
+Note that if the validator node's token amount does not meet the requirements when the epoch changes, the node will automatically transform back into a candidate node and lose the right to produce blocks. However, if the staking pool token amount meets the requirements later, it can become a validator node again.
+
+# Validator Rewards
+
+When validators produce blocks, they receive earnings consisting of two parts:
+
+1. **Stake Inflation Reward:** Every epoch, a reward rate is calculated based on the overall staking ratio of the network (higher reward rate when staking ratio is low, lower when ratio is high). This rate determines the reward for each block produced during the epoch.
+
+2. **Block Gas Fee Earnings:** Currently, all gas fee earnings from blocks are distributed to the nodes.
+
+These earnings are not distributed in real-time but are allocated at the end of each epoch. They are then distributed to delegators by the staking pool.
+
+# Node Exit
+
+When the node operator decides to stop operating the node, they can voluntarily exit. However, the exit must comply with the Staking limitations. After the node exits, the staking pool will close and can no longer accept delegated staking. Only unlocking and withdrawals will be possible.
+The operator uses the following command to exit:
+```shell
+./axiom-ledger node exit \
+--node-id YOUR_NODE_ID \
+--sender b6477143e17f889263044f6cf463dc37177ac4526c4c39a7a344198457024a2f
+```
+You need to specify the node ID, and the sender must be the operator's private key.
+After the transaction is executed and confirmed, the staking pool will immediately close. Non-validator nodes can stop the node directly, but validator nodes must wait until the next epoch to stop the node (since the current epoch still requires the validator to produce blocks).

@@ -103,4 +103,5 @@ for your operating system and CPU architecture, and unzip it in the deployment e
     ```
 
 ## Connect to Mainnet/Testnet
-The default config generated from the official binary downloaded from GitHub already contains mainnet/testnet P2P seed node information. So after startup it will automatically connect to mainnet/testnet. However, before the governance proposal to add the node is approved, other nodes will reject this node's connection requests. The node can only join the network after the governance proposal is approved.
+
+The default configuration generated from the binary downloaded from the official GitHub repository already includes information about the mainnet and testnet P2P seed nodes. Therefore, the node will automatically connect to the mainnet or testnet after startup. However, if the node has not been registered into the network, it will not be able to properly synchronize block data. Only after the node registration has been checked and approved can the node join the network.
