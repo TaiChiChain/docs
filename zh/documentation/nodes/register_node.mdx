@@ -1,0 +1,27 @@
+---
+title: "节点注册"
+description: "了解如何注册一个 `AxiomLedger` 节点。"
+---
+
+完成上一节内容之后，我们已经部署好了一个 `AxiomLedger` 节点。这里我们会描述如何将该节点真正的注册加入网络。
+
+## 发起节点注册申请
+
+节点注册申请可以通过节点的相应命令行进行发起，命令如下所示：
+```shell
+axiom-ledger --repo=$WORKSPACE node --rpc https://node1.rpc register \
+--node-name YOUR_NODE_NAME \
+--node-desc YOUR_NODE_DESC \
+--node-image-url YOUR_NODE_IMAGE_URL \
+--node-website-url YOUR_NODE_WEBSITE_URL \
+--sender b6477143e17f889263044f6cf463dc37177ac4526c4c39a7a344198457024a2f
+```
+该命令需要填写节点的元信息，包含节点名称，描述，图片和官网链接，并设置网络中的rpc节点(不能使用本节点的，本节点状态是落后的)，
+使用的sender私钥会签名交易，等申请通过后成为节点的operator，拥有管理节点的权限。
+
+## 等待申请通过
+执行上述命令发起节点注册申请后，需要等待治理委员会检查节点运营资格，通过后节点会成为网络中的一个数据节点(无法成为共识出块节点，只能转发交易和同步区块数据), 并为该节点分配一个唯一的整数id。
+
+
+
+

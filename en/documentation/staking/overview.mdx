@@ -1,0 +1,34 @@
+---
+title: "Overview"
+---
+
+AxiomLedger uses a Proof of Stake (PoS) mechanism to select validator nodes and assigns their block production weight based on the amount of staked tokens, enhancing the security of the entire network. Users can participate in the network consensus and share the node's rewards by staking their tokens into designated staking pools.
+
+Here, we outline the key concepts and primary processes of staking within the AxiomLedger ecosystem.
+
+# Key Concepts
+
+1. **Delegated Staking Pools**: Nodes can create staking pools to become candidate nodes (when the total stake in the pool meets the conditions, it becomes a validator node with block production rights and earnings). Ordinary users can delegate their tokens to a designated staking pool to obtain LST (ERC721 token, Liquid Staking Token) and share the node's earnings proportionally to their stake.
+2. **Node Fee Deduction from Delegators' Rewards**: Validator rewards are distributed every epoch, with a proportion deducted by the node (this deduction is automatically added to the staking pool for compounding). The deducted amount is allocated to the corresponding LST tied to the staking pool (automatically minted and bound when the staking pool is created).
+3. **Node Exit Queue**: There is a limit on the number of nodes that can exit each epoch, which resets every epoch.
+4. **Token Addition and Unlocking Limits per Epoch**: There is a cap on the number of tokens that can be added and unlocked each epoch, which resets every epoch.
+5. **Minimum and Maximum Staking Limits**: Each staking pool has a total token limit, and the pool must meet the lower limit to qualify as a validator node.
+6. **Staking Rewards**: Rewards consist of two parts: staking inflation rewards and gas fee earnings from block production. Nodes only earn rewards if they produce blocks.
+7. **Compounding**: Rewards are automatically added to the pool for staking (not subject to the pool's token limit).
+8. **Consensus Penalties**: Abnormal nodes' subsequent rewards are penalized for a period.
+9. **Epoch Delays for Status Changes**: Changes in node status/stake token status require a delay of one epoch.
+10. **Governance Committee Authority**: The committee has the authority to remove validators to ensure network security.
+11. **Withdrawal Lock Period**: After unstaking, there is a lock period before tokens can be withdrawn; tokens must be unlocked first, and withdrawal can occur after the lock period.
+12. **Minimum Delegated Staking Amount**: There is a minimum limit for each delegated staking transaction.
+13. **Limits on Simultaneous Unlocking Records for a Single NFT**: Regular LST tokens do not currently support partial unlocking; only LSTs tied to staking pools support partial unlocking.
+
+
+
+<CardGroup cols={2}>
+  <Card title="Validator" icon="square-1" href="./validator">
+    Becoming a Validator 
+  </Card>
+  <Card title="Delegated Staking" icon="square-2" href="./delegated-staking">
+    Delegate staking tokens to a staking pool
+  </Card>
+</CardGroup>

@@ -1,0 +1,30 @@
+---
+title: "Delegated Staking"
+---
+
+Users can delegate their tokens for staking to a node's staking pool to earn rewards. The staking pool only generates earnings when the node it belongs to produces blocks as a validator. Only users who delegate their tokens can share in these earnings.
+
+Users can delegate their tokens either through the official Staking (TODO: link) website or directly interact with the staking contracts:
+
+Staking contract address: **0x0000000000000000000000000000000000001003**
+
+Staking contract: [StakingManager](https://github.com/axiomesh/axiom-ledger/blob/main/internal/executor/system/framework/solidity/StakingManager.sys.sol)
+
+LST contract address: **0x0000000000000000000000000000000000001004**
+
+LST contract: [LiquidStakingToken](https://github.com/axiomesh/axiom-ledger/blob/main/internal/executor/system/framework/solidity/LiquidStakingToken.sys.sol)
+
+The overall state model for staked tokens is depicted in the following diagram:
+![node state model](en/images/staking/stake-state-model.png)
+
+# Delegation
+Regular users can delegate their staked tokens to a designated staking pool (provided it is not closed) and lock them until the next epoch to start earning rewards. Delegating staked tokens generates a Liquid Staking Token (LST) (an ERC721 token) where the token owner holds the principal and earnings from the staking, and can freely buy, sell, or transfer it. The tokens delegated for staking start earning rewards at the beginning of the next epoch.
+
+# Rewards Distribution
+At the end of each epoch, the staking pool's earnings are distributed. Accumulated rewards for the epoch are first subjected to the staking pool's commission rate, which accumulates in the associated LST for compounding. The remaining rewards are distributed based on the ratio of each user's delegated stake in the pool, also accumulating in their respective LST. Note that rewards are not directly distributed to the LST owner but accumulate until the user initiates a transaction to unlock and withdraw them.
+
+# Unlocking Staked Tokens
+To withdraw delegated staked tokens, users must first unlock the corresponding LST tokens (currently supporting full unlocking including principal and accumulated earnings). After unlocking, there is a waiting period before withdrawal becomes possible. It's important to note that no rewards are earned during the epoch in which the unlocking operation is executed.
+
+# Withdrawal
+Once the waiting period for LST unlocking has elapsed, users can directly withdraw the tokens to their own account or to a specified account.

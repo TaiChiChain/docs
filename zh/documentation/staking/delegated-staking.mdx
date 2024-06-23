@@ -1,0 +1,38 @@
+---
+title: "委托质押"
+---
+
+用户可以将他们的代币委托质押到节点的质押池中以获取收益，当质押池所属的节点未成为验证者节点出块时，质押池是没有收益的，只有节点出块才能获取收益，
+委托质押的用户才能从中分得收益。
+
+用户可以通过官方Staking(TODO: link)网站进行委托质押操作，当然也可以和质押合约直接进行交互:
+
+质押合约地址：**0x0000000000000000000000000000000000001003**
+
+质押合约：[StakingManager](https://github.com/axiomesh/axiom-ledger/blob/main/internal/executor/system/framework/solidity/StakingManager.sys.sol)
+
+LST合约地址：**0x0000000000000000000000000000000000001004**
+
+LST合约：[LiquidStakingToken](https://github.com/axiomesh/axiom-ledger/blob/main/internal/executor/system/framework/solidity/LiquidStakingToken.sys.sol)
+
+整个质押代币的状态模型如下图：
+![node state model](en/images/staking/stake-state-model.png)
+
+# 委托质押
+普通用户可以委托质押代币给指定的质押池(不能是已关闭的)，等到下一个epoch开始进行锁定并获取收益。委托质押后会生成一个LST代币(ERC721代币，LiquidStakingToken)，这个代币的所有者拥有质押的本金和收益，也可以进行买卖转移。
+用户的委托质押代币会在下个epoch开始锁定，并开始获取收益。
+
+# 收益分配
+质押池的收益每个epoch结束的时候进行分配，每个epoch累计的收益首先会根据质押池的抽水比例进行抽水，抽水会累积到质押池绑定的LST中进行复利，
+剩下的奖励会按照用户委托质押的本金在整个池子中的比例分配，会复利累计到对应的LST上。
+注意奖励不会直接打给LST的owner，而只会累计，用户需要发送交易主动解锁提款。
+
+
+# 解锁质押
+用户的委托质押想要提款时必须先拿对应的LST进行解锁（当前仅支持全额解锁，包含本金和累计的收益），用户解锁后会进入一个解锁期，当解锁期过了之后，才能提款。
+注意，执行解锁操作的这个epoch是不会获得收益的。
+
+
+# 提款
+当LST的解锁期过了之后，用户可以直接提款到自己的账号或者指定的账号。
+

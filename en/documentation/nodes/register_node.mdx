@@ -1,0 +1,22 @@
+---
+title: "Register Node"
+description: "Learn how to add an extra `AxiomLedger` node."
+---
+
+After completing the previous section, we have deployed an `AxiomLedger` node. Here, we will describe how to register this node and join the network.
+
+## Initiating Node Registration
+
+You can initiate node registration via the appropriate command line. The command is as follows:
+```shell
+axiom-ledger --repo=$WORKSPACE node --rpc https://node1.rpc register \
+--node-name YOUR_NODE_NAME \
+--node-desc YOUR_NODE_DESC \
+--node-image-url YOUR_NODE_IMAGE_URL \
+--node-website-url YOUR_NODE_WEBSITE_URL \
+--sender b6477143e17f889263044f6cf463dc37177ac4526c4c39a7a344198457024a2f
+```
+This command requires you to fill in the node metadata, including the node name, description, image URL, and website URL, and set the RPC node in the network (you cannot use your own node as its state is outdated). The sender's private key will sign the transaction. Once the application is approved, the sender will become the node operator and have the authority to manage the node.
+
+## Waiting for Approval
+After executing the above command to initiate node registration, you need to wait for the governing committee to verify the node's operational qualifications. Once approved, the node will become a data node in the network (unable to become a consensus block-producing node, only capable of forwarding transactions and synchronizing block data) and will be assigned a unique integer ID.
